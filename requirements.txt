@@ -1,0 +1,28 @@
+# ===================================================================
+# Video Extractor Server - Simplified Requirements
+# ===================================================================
+# Core Framework
+fastapi
+uvicorn[standard]
+
+# Video Processing & Extraction
+yt-dlp
+
+# HTTP & Networking
+httpx
+requests
+
+# Data Processing & Validation
+pydantic
+python-multipart
+
+# Security & Authentication (No cryptography dependency)
+python-jose
+passlib
+
+# Utilities & Helpers
+python-dotenv
+aiofiles
+
+# Logging & Monitoring
+loguru
