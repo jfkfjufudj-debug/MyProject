@@ -1,15 +1,23 @@
 # ===================================================================
-# Video Extractor Server - Render Compatible Requirements
+# Video Extractor Server - Complete Requirements for Render
 # ===================================================================
 # Core Framework
-fastapi
-uvicorn
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
 
 # Video Processing & Extraction
-yt-dlp
+yt-dlp==2023.12.30
 
 # HTTP & Networking
-requests
+httpx==0.25.2
+requests==2.31.0
 
 # Data Processing & Validation
-python-multipart
+python-multipart==0.0.6
+
+# Security & Authentication
+passlib[bcrypt]==1.7.4
+
+# Utilities & Helpers
+python-dotenv==1.0.0
+aiofiles==23.2.0

@@ -5,8 +5,8 @@ Video Extractor Server - Render Deployment App
 This file imports the app from main_render.py for Render compatibility
 """
 
-# Import the app from main_render.py
-from main_render import app
+# Import the app from main_complete.py (full features)
+from main_complete import app
 
 # This allows Render to find the app
 __all__ = ["app"]
