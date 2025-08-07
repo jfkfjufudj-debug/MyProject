@@ -364,10 +364,12 @@ if __name__ == "__main__":
     logger.info("🎬 Initializing Video Extractor Server...")
     
     # Run server
+    import os
+    port = int(os.environ.get("PORT", settings.SERVER_PORT))
     uvicorn.run(
         "main:app",
-        host=settings.SERVER_HOST,
-        port=settings.SERVER_PORT,
+        host="0.0.0.0",
+        port=port,
         reload=settings.DEBUG_MODE,
         log_level=settings.LOG_LEVEL.lower(),
         access_log=True,
