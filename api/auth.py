@@ -1,10 +1,10 @@
 """
 ===================================================================
-Video Extractor Server - Professional Authentication & Security
+Video Extractor Server - Simplified Authentication & Security
 ===================================================================
 Author: Professional Development Team
 Version: 1.0.0
-Description: Advanced API authentication and security middleware
+Description: Simple API authentication and security middleware
 """
 
 import time
@@ -13,9 +13,16 @@ from typing import Dict, Optional, List
 from collections import defaultdict, deque
 from fastapi import HTTPException, Security, Depends, Request
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from loguru import logger
 
 from config.settings import settings
+
+# Simple logger replacement
+class SimpleLogger:
+    def info(self, msg): print(f"INFO: {msg}")
+    def warning(self, msg): print(f"WARNING: {msg}")
+    def error(self, msg): print(f"ERROR: {msg}")
+
+logger = SimpleLogger()
 
 class SecurityManager:
     """
