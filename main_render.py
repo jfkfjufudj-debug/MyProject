@@ -64,7 +64,7 @@ def verify_api_key(request: Request):
     auth_header = request.headers.get("Authorization")
     api_key_param = request.query_params.get("api_key")
     api_key_header = request.headers.get("X-API-Key")
-    
+
     provided_key = None
     if auth_header and auth_header.startswith("Bearer "):
         provided_key = auth_header[7:]
@@ -72,13 +72,13 @@ def verify_api_key(request: Request):
         provided_key = api_key_param
     elif api_key_header:
         provided_key = api_key_header
-    
+
     if not provided_key or provided_key != settings.API_KEY:
         raise HTTPException(
             status_code=401,
             detail="Invalid or missing API key"
         )
-    
+
     return True
 
 # Root endpoint
@@ -109,24 +109,25 @@ async def extract_video(request: Request, data: dict):
     """Extract video information"""
     # Verify API key
     verify_api_key(request)
-    
+
     url = data.get("url")
     if not url:
         raise HTTPException(status_code=400, detail="URL is required")
-    
+
     try:
         # Simple yt-dlp extraction
         import yt_dlp
-        
+
         ydl_opts = {
             'quiet': True,
             'no_warnings': True,
-            'extract_flat': False
+            'extract_flat': False,
+            'no_check_certificate': True
         }
-        
+
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(url, download=False)
-            
+
             # Extract basic information
             result = {
                 "success": True,
@@ -136,12 +137,12 @@ async def extract_video(request: Request, data: dict):
                     "uploader": info.get("uploader", "Unknown"),
                     "view_count": info.get("view_count", 0),
                     "upload_date": info.get("upload_date", "Unknown"),
-                    "description": info.get("description", "")[:500],  # Limit description
+                    "description": (info.get("description", "") or "")[:500],  # Limit description
                     "thumbnail": info.get("thumbnail", ""),
                     "formats": []
                 }
             }
-            
+
             # Extract available formats
             if info.get("formats"):
                 for fmt in info["formats"][:10]:  # Limit to 10 formats
@@ -150,12 +151,11 @@ async def extract_video(request: Request, data: dict):
                             "format_id": fmt.get("format_id", ""),
                             "ext": fmt.get("ext", ""),
                             "quality": fmt.get("format_note", ""),
-                            "filesize": fmt.get("filesize", 0),
-                            "url": fmt.get("url", "")
+                            "filesize": fmt.get("filesize", 0)
                         })
-            
+
             return result
-            
+
     except Exception as e:
         raise HTTPException(
             status_code=500,
