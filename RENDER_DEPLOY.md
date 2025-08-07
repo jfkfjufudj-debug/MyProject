@@ -38,7 +38,7 @@ This server has been tested and optimized for Render.com deployment.
 1. **Push to GitHub:**
    ```bash
    git add .
-   git commit -m "Optimized for Render deployment"
+   git commit -m "Fixed Render deployment - simplified dependencies and fixed main.py issue"
    git push origin main
    ```
 
@@ -46,6 +46,13 @@ This server has been tested and optimized for Render.com deployment.
 
 3. **Set Environment Variables in Render:**
    - `API_KEY=your-secure-api-key-here`
+
+### 🔧 **Key Fixes Applied:**
+
+- ✅ **Removed complex dependencies** (pydantic-core, loguru, etc.)
+- ✅ **Created app.py** to avoid main.py conflicts
+- ✅ **Updated Procfile** to use `app:app`
+- ✅ **Simplified requirements.txt** for Render compatibility
 
 ### 🔗 API Endpoints:
 
